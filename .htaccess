@@ -1,0 +1,140 @@
+<ifModule mod_headers.c>
+    # Встановлює політику реферера, щоб не передавати інформацію про реферер, якщо сайт переходить на менш безпечний протокол (HTTP).
+    Header set Referrer-Policy "no-referrer-when-downgrade"
+</ifModule>
+
+<IfModule mod_rewrite.c>
+    # Вмикає модуль переписування URL (mod_rewrite).
+    RewriteEngine On
+    # Умови для перевірки, що запитуваний файл не є директорією.
+    RewriteCond %{REQUEST_FILENAME} !-d
+    # Умови для перевірки, що запитуваний файл не є звичайним файлом.
+    RewriteCond %{REQUEST_FILENAME} !-f
+    # Перенаправлення для URL, що відповідає формату "/modules/путь/раздел".
+    RewriteRule ^([-a-zA-Z0-9_]*)/([-a-zA-Z0-9_]*)/?$ /index.php?base=modules&path=$1&section=$2 [L,QSA]
+</IfModule>
+
+<IfModule php_value>
+    # Вимикає реєстрацію глобальних змінних PHP.
+    php_value register_globals 0 
+    # Вимикає автоматичне екранування вхідних даних.
+    php_value magic_quotes_gpc 0 
+    # Увімкнення використання session ID через URL.
+    php_value session.use_trans_sid 1 
+    # Встановлює термін дії cookie сесії на нескінченність (0).
+    php_value session.cookie_lifetime 0
+</IfModule>
+
+# Встановлює кодування за замовчуванням як UTF-8.
+AddDefaultCharset UTF-8
+# Вказує, що головний файл для запуску — index.php.
+DirectoryIndex index.php
+# Вимикає показ вмісту каталогів.
+Options -Indexes
+# Додає тип для файлів WML з кодуванням UTF-8.
+AddType text/vnd.wap.wml;charset=utf-8 .wml
+# Додає тип для файлів шаблонів MMS.
+AddType application/vnd.sonyericsson.mms-template tpl
+# Додає тип для скомпільованих WML-файлів.
+AddType application/vnd.wap.wmlc .wmlc
+# Додає тип для WML-скриптів.
+AddType text/vnd.wap.wmlscript .wmls
+# Додає тип для скомпільованих WML-скриптів.
+AddType application/vnd.wap.wmlscriptc .wmlsc
+# Додає тип для WAP-бітових зображень.
+AddType image/vnd.wap.wbmp .wbmp
+# Додає тип для файлів THM (картинки для телефонів).
+AddType application/vnd.eri.thm .thm 
+# Додає тип для файлів додатків Mophun.
+AddType application/vnd.mophun.application .mpn  
+# Додає тип для сертифікатів Mophun.
+AddType application/vnd.mophun.certificate .mpc
+# Додає тип для файлів JAD (описи додатків Java).
+AddType text/vnd.sun.j2me.app-descriptor .jad
+# Додає тип для файлів VMELODY.
+Addtype text/x-vmel .mel
+# Додає тип для файлів IMELODY.
+Addtype audio/imelody .imy
+# Додає тип для файлів SMAF.
+AddType application/vnd.smaf .mmf
+# Додає тип для файлів EMELODY.
+Addtype text/x-vmel .emy
+# Додає тип для AMR аудіофайлів.
+AddType audio/amr .amr
+# Додає тип для WAV аудіофайлів.
+AddType audio/x-wav .wav
+# Додає тип для архівних файлів.
+AddType application/x-tar .hid
+# Додає тип для зображень JPEG.
+Addtype image/jpeg .jpg 
+Addtype image/jpeg .jpeg 
+# Додає тип для зображень GIF.
+Addtype image/gif .gif 
+# Додає тип для зображень PNG.
+Addtype image/png .png 
+# Додає тип для зображень BMP.
+Addtype image/bmp .bmp 
+# Додає тип для IMELODY.
+Addtype text/x-imelody .imy 
+# Додає тип для EMELODY.
+Addtype text/x-emelody .emy 
+# Додає тип для VCard.
+Addtype text/x-vcard .vcf 
+# Додає тип для VCalendar.
+Addtype text/x-vcalendar .vcs 
+# Додає тип для календарних файлів.
+Addtype text/calendar .ics 
+# Додає тип для SMIL-файлів.
+Addtype application/smil .smil 
+Addtype application/smil .smi 
+# Додає тип для JAR-файлів (архіви Java).
+Addtype application/java-archive .jar 
+# Додає тип для установчих файлів Symbian.
+Addtype application/vnd.symbian.install .sis 
+# Додає тип для WAV аудіофайлів.
+Addtype audio/wav .wav 
+# Додає тип для MIDI файлів.
+Addtype audio/midi .midi 
+Addtype audio/midi .mid 
+# Додає тип для RMF файлів.
+Addtype audio/rmf .rmf 
+# Додає тип для MMS повідомлень.
+Addtype application/vnd.wap.mms-message .mms 
+# Додає тип для відео FLV.
+AddType video/flv .flv
+# Додає тип для відео MP4.
+AddType video/mp4 .mp4
+# Додає тип для відео 3GPP.
+Addtype video/3gpp .3gp
+# Додає тип для ZIP-архівів.
+Addtype application/zip .zip
+# Додає тип для аудіо MP3.
+Addtype audio/mpeg .mp3
+# Встановлює обробник для PHP у файлах HTML.
+AddHandler application/x-httpd-php .html
+# Встановлює обробник для CGI-скриптів.
+AddHandler cgi-script .pl .py .jsp .asp .htm .shtml .sh .cgi
+# Додає тип для JavaScript файлів.
+AddType application/x-javascript .js
+# Додає тип для CSS файлів.
+AddType text/css .css
+# Додає тип для XML файлів.
+AddType text/xml .xml
+# Додає тип для файлів, які мають байтовий потік (не визначений тип).
+AddType application/octet-stream .doc .mov .avi .pdf .xls 
+
+<ifModule mod_deflate.c>
+    # Застосовує стиснення DEFLATE для зазначених типів контенту.
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml application/xml application/xhtml+xml text/css text/javascript application/javascript application/x-javascript
+</ifModule>
+
+# Налаштування сторінок помилок для коду 400 (поганий запит).
+ErrorDocument 400 /warning/?status=400
+# Налаштування сторінок помилок для коду 401 (неавторизований доступ).
+ErrorDocument 401 /warning/?status=401
+# Налаштування сторінок помилок для коду 402 (потрібна оплата).
+ErrorDocument 402 /warning/?status=402
+# Налаштування сторінок помилок для коду 403 (заборонено).
+ErrorDocument 403 /warning/?status=403
+# Налаштування сторінок помилок для коду 404 (не знайдено).
+ErrorDocument 404 /warning/?status=404
