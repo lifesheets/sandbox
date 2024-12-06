@@ -30,14 +30,24 @@ header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 60 * 60 * 24) . ' GMT'); 
 # Встановлює підключення до бази даних.
 DatabaseHandler::connect('mariadb-11.2', 'sandbox', 'root', '');
 
-if (DatabaseHandler::isConnected()) {
-    // Виведення повідомлення про успішне підключення до бази даних
-    echo 'Підключення до бази даних встановлене.';
-} else {
-    // Виведення повідомлення про невдале підключення до бази даних
-    echo 'Підключення до бази даних не встановлене.';
+# Перевірка на підключення до бази даних.
+if (!DatabaseHandler::isConnected()) {
+    exit('Підключення до бази даних не встановлене.');
 }
 
+# Основні параметри запиту.
+$base = sanitize(Direct::get('base'));
+$path = sanitize(Direct::get('path'));
+$subpath = sanitize(Direct::get('subpath'));
+$section = sanitize(Direct::get('section'));
+
+# Перевірка наявності параметрів у URI.
+if (hasInvalidParams(['base', 'path', 'subpath', 'section'])) {
+    redirect('/');
+}
+
+# Логіка обробки запиту.
+processRequest($base, $path, $subpath, $section);
 
 # Закриття підключення до бази даних
 DatabaseHandler::closeConnection();
