@@ -160,6 +160,18 @@ class DatabaseHandler
     }
 
     /**
+     * Виконує SQL-запит для перейменування таблиці.
+     *
+     * @param string $query SQL-запит.
+     * @return bool true при успіху, false у разі помилки.
+     */
+
+    public static function renameTable(string $query): bool
+    {
+        return self::prepareAndExecute($query) !== null;
+    }
+
+    /**
      * Закриває підключення до бази даних.
      */
 
