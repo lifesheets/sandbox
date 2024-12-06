@@ -172,6 +172,20 @@ class DatabaseHandler
     }
 
     /**
+     * Виконує SELECT-запит і повертає одну строку.
+     *
+     * @param string $query SQL-запит.
+     * @param array $parameters Параметри запиту.
+     * @return array|null Результат або null.
+     */
+
+    public static function fetchSingleRow(string $query, array $parameters = []): ?array
+    {
+        $stmt = self::prepareAndExecute($query, $parameters);
+        return $stmt?->fetch(PDO::FETCH_ASSOC) ?: null;
+    }
+
+    /**
      * Закриває підключення до бази даних.
      */
 
