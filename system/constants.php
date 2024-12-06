@@ -56,3 +56,9 @@ define('IP', _filter(filter_var($_SERVER['REMOTE_ADDR'] ?? '', FILTER_VALIDATE_I
 
 define('SCHEME', (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://');
 
+/**
+ * Повна URL-адреса запиту, включаючи шлях і параметри.
+ * Використовується для визначення, що саме запрошено на сервері.
+ */
+
+define('REQUEST_URI', _filter($_SERVER['REQUEST_URI'] ?? '/'));
