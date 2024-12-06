@@ -200,6 +200,31 @@ class DatabaseHandler
     }
 
     /**
+     * Виконує SQL-запити з файлу.
+     *
+     * @param string $filePath Шлях до SQL-файлу.
+     * @return bool true при успіху, false у разі помилки.
+     */
+
+    public static function executeSqlQueriesFromFile(string $filePath): bool
+    {
+        if (!file_exists($filePath)) {
+            error_log('Файл SQL не знайдено: ' . $filePath);
+            return false;
+        }
+
+        $sql = file_get_contents($filePath);
+        $queries = array_filter(array_map('trim', explode(';', $sql)));
+
+        foreach ($queries as $query) {
+            if (self::prepareAndExecute($query) === null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * Закриває підключення до бази даних.
      */
 
