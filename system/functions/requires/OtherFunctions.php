@@ -185,3 +185,20 @@ function config(string $key, mixed $value = null): mixed
     return $value;
 }
 
+/**
+ * Функція для визначення довжини рядка.
+ *
+ * Ця функція приймає рядок і повертає його довжину, використовуючи кодування UTF-8,
+ * щоб коректно обробляти багатобайтові символи.
+ *
+ * @param string $text Рядок, довжину якого потрібно визначити.
+ * @return int Повертає довжину рядка.
+ */
+
+function getStringLength(string $text): int
+{
+    // Удаляем все символы перехода на новую строку (\r\n, \r, \n)
+    $text = str_replace(["\r\n", "\r", "\n"], '', $text);
+    // Возвращаем длину строки с учётом UTF-8
+    return mb_strlen($text, 'UTF-8');
+}
