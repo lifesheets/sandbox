@@ -14,6 +14,14 @@ if (!session_start()) {
     exit('Помилка запуску сесії.');
 }
 
+# Перевірка ID сесії
+$sessID = session_id();
+
+# Генеруємо новий ID сесії, якщо поточний некоректний
+if (!preg_match('#[A-Za-z0-9]{32}#i', $sessID)) {
+    $sessID = md5((string) random_int(100000, 999999));
+}
+
 # Встановлює підключення до бази даних.
 DatabaseHandler::connect('mariadb-11.2', 'sandbox', 'root', '');
 
