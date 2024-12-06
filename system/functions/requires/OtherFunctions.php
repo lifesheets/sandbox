@@ -109,3 +109,59 @@ function redirect(string $url, int $refresh = 0): void
     exit;
 }
 
+/**
+ * Отримує значення з $_GET.
+ *
+ * @param string $key Ключ.
+ * @param int $sanitize Очищення даних.
+ * @return mixed Значення.
+ */
+
+function get(string $key, int $sanitize = 0): mixed
+{
+    return $sanitize === 0 ? remove_script($_GET[$key] ?? '') : ($_GET[$key] ?? null);
+}
+
+/**
+ * Отримує значення з $_POST.
+ *
+ * @param string $key Ключ.
+ * @param int $sanitize Очищення даних.
+ * @return mixed Значення.
+ */
+
+function post(string $key, int $sanitize = 0): mixed
+{
+    return $sanitize === 0 ? remove_script($_POST[$key] ?? '') : ($_POST[$key] ?? null);
+}
+
+/**
+ * Отримує значення з $_COOKIE.
+ *
+ * @param string $key Ключ.
+ * @return string Значення.
+ */
+
+function cookie(string $key): string
+{
+    return remove_script($_COOKIE[$key] ?? '');
+}
+
+/**
+ * Отримує або встановлює значення в $_SESSION.
+ *
+ * @param string $key Ключ.
+ * @param mixed $value Значення (для встановлення).
+ * @return mixed Значення або стан.
+ */
+
+function session(string $key, mixed $value = 'no_data'): mixed
+{
+    if ($value === 'no_data') {
+        return $_SESSION[$key] ?? null;
+    }
+
+    $_SESSION[$key] = $value;
+    return $value;
+}
+
