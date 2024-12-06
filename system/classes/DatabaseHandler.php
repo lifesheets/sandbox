@@ -225,6 +225,19 @@ class DatabaseHandler
     }
 
     /**
+     * Повертає кількість строк у таблиці.
+     *
+     * @param string $tableName Назва таблиці.
+     * @return int Кількість строк.
+     */
+
+    public static function getRowCount(string $tableName): int
+    {
+        $result = self::fetchSingleRow("SELECT COUNT(*) AS count FROM `$tableName`");
+        return (int)($result['count'] ?? 0);
+    }
+
+    /**
      * Закриває підключення до бази даних.
      */
 
