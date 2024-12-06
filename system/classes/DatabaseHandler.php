@@ -238,6 +238,21 @@ class DatabaseHandler
     }
 
     /**
+     * Повертає значення певного стовпця.
+     *
+     * @param string $query SQL-запит.
+     * @param array $parameters Параметри запиту.
+     * @param int $columnIndex Індекс стовпця.
+     * @return array Масив значень.
+     */
+
+    public static function fetchColumnValues(string $query, array $parameters = [], int $columnIndex = 0): array
+    {
+        $stmt = self::prepareAndExecute($query, $parameters);
+        return $stmt?->fetchAll(PDO::FETCH_COLUMN, $columnIndex) ?? [];
+    }
+
+    /**
      * Закриває підключення до бази даних.
      */
 

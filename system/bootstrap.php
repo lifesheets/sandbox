@@ -1,9 +1,9 @@
 <?php
 
-require_once ('./system/classes/DatabaseHandler.php');
+require_once('./system/classes/DatabaseHandler.php');
 
 # Встановлює підключення до бази даних.
-DatabaseHandler::connect();
+DatabaseHandler::connect('mariadb-11.2', 'sandbox', 'root', '');
 
 if (DatabaseHandler::isConnected()) {
     echo 'Підключення до бази даних встановлене.';
