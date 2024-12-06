@@ -1,6 +1,5 @@
 <?php
 
-require_once('./system/classes/DatabaseHandler.php');
 # Старт буферизації виводу
 ob_start();
 
