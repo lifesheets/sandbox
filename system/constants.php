@@ -14,3 +14,10 @@ define('TM', time());
 
 define('PHP_SELF', _filter($_SERVER['PHP_SELF']));
 
+/**
+ * Доменне ім'я або IP-адреса сервера.
+ * Використовується для визначення джерела запиту.
+ */
+
+define('HTTP_HOST', _filter($_SERVER['HTTP_HOST'] ?? ''));
+
