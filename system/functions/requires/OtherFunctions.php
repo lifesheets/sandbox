@@ -79,3 +79,15 @@ function clearspecialchars(?string $text): string
     return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
 }
 
+/**
+ * Фільтрує рядок для безпечного виведення.
+ *
+ * @param string $data Вхідний рядок.
+ * @return string Очищений рядок.
+ */
+
+function _filter(string $data): string
+{
+    return htmlspecialchars(remove_script($data), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+}
+
