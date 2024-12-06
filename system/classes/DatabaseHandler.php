@@ -87,6 +87,36 @@ class DatabaseHandler
             return null;
         }
     }
+
+    /**
+     * Повертає інформацію про базу даних.
+     *
+     * @return array Інформація про базу даних.
+     */
+
+    public static function getDatabaseInfo(): array
+    {
+        if (!self::connect()) {
+            error_log('Неможливо підключитися до бази даних.');
+            return [];
+        }
+
+        try {
+            $version = self::$connection->getAttribute(PDO::ATTR_SERVER_VERSION);
+            $driverName = self::$connection->getAttribute(PDO::ATTR_DRIVER_NAME);
+            $host = self::$connection->getAttribute(PDO::ATTR_CONNECTION_STATUS);
+
+            return [
+                'version' => $version,
+                'driver' => $driverName,
+                'host' => $host
+            ];
+        } catch (PDOException $e) {
+            error_log('Помилка отримання інформації про базу даних: ' . $e->getMessage());
+            return [];
+        }
+    }
+
     /**
      * Закриває підключення до бази даних.
      */
