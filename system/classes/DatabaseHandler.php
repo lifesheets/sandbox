@@ -67,6 +67,27 @@ class DatabaseHandler
     }
 
     /**
+     * Підготовка запиту, без виконання.
+     *
+     * @param string $query SQL-запит.
+     * @return PDOStatement|null Підготовлений запит або null.
+     */
+
+    public static function prepareStatement(string $query): ?PDOStatement
+    {
+        if (!self::connect()) {
+            error_log('Неможливо підключитися до бази даних.');
+            return null;
+        }
+
+        try {
+            return self::$connection->prepare($query);
+        } catch (PDOException $e) {
+            error_log('Помилка підготовки запиту: ' . $e->getMessage());
+            return null;
+        }
+    }
+    /**
      * Закриває підключення до бази даних.
      */
 
