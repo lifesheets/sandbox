@@ -118,6 +118,20 @@ class DatabaseHandler
     }
 
     /**
+     * Виконує INSERT-запит і повертає ID вставленого запису.
+     *
+     * @param string $query SQL-запит.
+     * @param array $parameters Параметри запиту.
+     * @return int ID вставленого запису або 0 у разі помилки.
+     */
+
+    public static function insertRecord(string $query, array $parameters = []): int
+    {
+        $stmt = self::prepareAndExecute($query, $parameters);
+        return $stmt ? (int)self::$connection->lastInsertId() : 0;
+    }
+
+    /**
      * Закриває підключення до бази даних.
      */
 
