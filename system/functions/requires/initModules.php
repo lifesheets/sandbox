@@ -15,7 +15,7 @@ function sanitize(?string $data): ?string
 # Підключення файлу.
 function includeFile(string $filePath): bool
 {
-    if (direct::existsPath($filePath)) {
+    if (Direct::existsPath($filePath)) {
         require_once ROOT . $filePath;
         exit;
     }
@@ -26,12 +26,12 @@ function includeFile(string $filePath): bool
 function processRequest(?string $base, ?string $path, ?string $subpath, ?string $section): void
 {
     $defaultModule = '/modules/main/index.php';
-    if (direct::existsPath("/$base/", 'dir')) {
-        if (direct::existsPath("/$base/$path/$subpath/", 'dir')) {
+    if (Direct::existsPath("/$base/", 'dir')) {
+        if (Direct::existsPath("/$base/$path/$subpath/", 'dir')) {
             includeFile("/$base/$path/$subpath/$section.php")
                 ?: includeFile("/$base/$path/$subpath/index.php")
                 ?: includeFile($defaultModule);
-        } elseif (direct::existsPath("/$base/$path/", 'dir')) {
+        } elseif (Direct::existsPath("/$base/$path/", 'dir')) {
             includeFile("/$base/$path/$section.php")
                 ?: includeFile("/$base/$path/index.php")
                 ?: includeFile($defaultModule);
