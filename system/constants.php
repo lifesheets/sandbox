@@ -42,3 +42,10 @@ define('HTTP_REFERER', _filter($_SERVER['HTTP_REFERER'] ?? 'none'));
 
 define('BROWSER', _filter($_SERVER['HTTP_USER_AGENT'] ?? 'none'));
 
+/**
+ * IP-адреса користувача, який зробив запит.
+ * Використовується для ідентифікації джерела запитів, безпеки чи статистики.
+ */
+
+define('IP', _filter(filter_var($_SERVER['REMOTE_ADDR'] ?? '', FILTER_VALIDATE_IP) ?? ''));
+
