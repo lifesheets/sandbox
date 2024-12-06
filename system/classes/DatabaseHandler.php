@@ -132,6 +132,20 @@ class DatabaseHandler
     }
 
     /**
+     * Виконує UPDATE-запит і повертає кількість оновлених рядків.
+     *
+     * @param string $query SQL-запит.
+     * @param array $parameters Параметри запиту.
+     * @return int Кількість оновлених рядків.
+     */
+
+    public static function updateRecord(string $query, array $parameters = []): int
+    {
+        $stmt = self::prepareAndExecute($query, $parameters);
+        return $stmt ? $stmt->rowCount() : 0;
+    }
+
+    /**
      * Закриває підключення до бази даних.
      */
 
