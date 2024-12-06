@@ -49,3 +49,10 @@ define('BROWSER', _filter($_SERVER['HTTP_USER_AGENT'] ?? 'none'));
 
 define('IP', _filter(filter_var($_SERVER['REMOTE_ADDR'] ?? '', FILTER_VALIDATE_IP) ?? ''));
 
+/**
+ * Протокол, який використовується для з'єднання (HTTP або HTTPS).
+ * Визначає тип з'єднання, що може впливати на безпеку передачі даних.
+ */
+
+define('SCHEME', (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://');
+
