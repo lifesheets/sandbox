@@ -28,3 +28,10 @@ define('HTTP_HOST', _filter($_SERVER['HTTP_HOST'] ?? ''));
 
 define('SERVER_NAME', _filter($_SERVER['SERVER_NAME'] ?? ''));
 
+/**
+ * URL-адреса сторінки, з якої користувач перейшов на поточну.
+ * Може бути корисною для аналітики чи перенаправлень.
+ */
+
+define('HTTP_REFERER', _filter($_SERVER['HTTP_REFERER'] ?? 'none'));
+
