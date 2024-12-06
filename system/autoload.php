@@ -4,3 +4,9 @@
 define('ROOT', $_SERVER['DOCUMENT_ROOT']);                                              // Поточна директорія як корінь програми
 define('LCMS', ROOT . '/system');                                                       // Базова директорія системи LiveCMS
 
+# Перевірка існування системних файлів
+if (!file_exists(LCMS . '/bootstrap.php')) {
+    error_log('Відсутні необхідні системні файли', 0);
+    exit('Системні файли не знайдено.');
+}
+
