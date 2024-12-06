@@ -22,15 +22,26 @@ if (!preg_match('#[A-Za-z0-9]{32}#i', $sessID)) {
     $sessID = md5((string) random_int(100000, 999999));
 }
 
+# Встановлення заголовків HTTP
+header('Content-Type: text/html; charset=UTF-8');                                       // Встановлення кодування UTF-8
+header('Powered: LiveCMS');                                                             // Ідентифікатор CMS у заголовку
+header('Cache-control: public');                                                        // Публічне кешування
+header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 60 * 60 * 24) . ' GMT');         // Термін дії кешу — 1 день
+
 # Встановлює підключення до бази даних.
 DatabaseHandler::connect('mariadb-11.2', 'sandbox', 'root', '');
 
 if (DatabaseHandler::isConnected()) {
+    // Виведення повідомлення про успішне підключення до бази даних
     echo 'Підключення до бази даних встановлене.';
 } else {
+    // Виведення повідомлення про невдале підключення до бази даних
     echo 'Підключення до бази даних не встановлене.';
 }
 
+
+# Закриття підключення до бази даних
 DatabaseHandler::closeConnection();
+
 # Закриття буферизації та виведення вмісту буфера на екран
 ob_end_flush();
