@@ -35,3 +35,10 @@ define('SERVER_NAME', _filter($_SERVER['SERVER_NAME'] ?? ''));
 
 define('HTTP_REFERER', _filter($_SERVER['HTTP_REFERER'] ?? 'none'));
 
+/**
+ * Інформація про браузер користувача або клієнтський пристрій.
+ * Використовується для адаптації інтерфейсу або запису в логи.
+ */
+
+define('BROWSER', _filter($_SERVER['HTTP_USER_AGENT'] ?? 'none'));
+
