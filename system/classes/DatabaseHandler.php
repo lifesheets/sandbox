@@ -146,6 +146,20 @@ class DatabaseHandler
     }
 
     /**
+     * Виконує DELETE-запит і повертає кількість видалених рядків.
+     *
+     * @param string $query SQL-запит.
+     * @param array $parameters Параметри запиту.
+     * @return int Кількість видалених рядків.
+     */
+
+    public static function deleteRecord(string $query, array $parameters = []): int
+    {
+        $stmt = self::prepareAndExecute($query, $parameters);
+        return $stmt ? $stmt->rowCount() : 0;
+    }
+
+    /**
      * Закриває підключення до бази даних.
      */
 
