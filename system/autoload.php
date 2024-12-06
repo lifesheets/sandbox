@@ -10,8 +10,17 @@ if (!file_exists(LCMS . '/bootstrap.php')) {
     exit('Системні файли не знайдено.');
 }
 
-# Функція для рекурсивного пошуку PHP-файлів
-require_once LCMS . '/functions/requires/RecursiveFileFinder.php';                      
+# Підключення файлу для рекурсивного пошуку PHP-файлів
+require_once LCMS . '/functions/requires/RecursiveFileFinder.php';
+
+# Підключення файлу з іншими функціями
+require_once LCMS . '/functions/requires/OtherFunctions.php';
+
+# Підключення файлу з константами програми
+require_once LCMS . '/constants.php';
+
+# Підключення файлу для ініціалізації модулів
+require_once LCMS . '/functions/requires/initModules.php';
 
 # Отримання списку всіх PHP-файлів у папці functions, виключаючи 'requires'
 $function_files = array_filter(
