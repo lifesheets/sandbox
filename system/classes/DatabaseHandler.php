@@ -186,6 +186,20 @@ class DatabaseHandler
     }
 
     /**
+     * Виконує SELECT-запит і повертає всі строки.
+     *
+     * @param string $query SQL-запит.
+     * @param array $parameters Параметри запиту.
+     * @return array|null Масив результатів або null.
+     */
+
+    public static function fetchAllRows(string $query, array $parameters = []): ?array
+    {
+        $stmt = self::prepareAndExecute($query, $parameters);
+        return $stmt?->fetchAll(PDO::FETCH_ASSOC) ?: null;
+    }
+
+    /**
      * Закриває підключення до бази даних.
      */
 
