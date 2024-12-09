@@ -11,7 +11,7 @@
     # Умови для перевірки, що запитуваний файл не є звичайним файлом.
     RewriteCond %{REQUEST_FILENAME} !-f
     # Перенаправлення для URL, що відповідає формату "/modules/путь/раздел".
-    RewriteRule ^([-a-zA-Z0-9_]*)/([-a-zA-Z0-9_]*)/?$ /index.php?base=modules&path=$1&section=$2 [L,QSA]
+    RewriteRule ^([-a-zA-Z0-9_]*)/([-a-zA-Z0-9_]*)/?$ /index.php?base=plugins&path=$1&section=$2 [L,QSA]
 </IfModule>
 
 <IfModule php_value>

@@ -43,7 +43,7 @@ class LoggerHandler
      * @param string $message Текст повідомлення.
      */
 
-    public static function critical(string $message): void
+    private static function critical(string $message): void
     {
         self::log($message, 'CRITICAL');
     }
@@ -53,7 +53,7 @@ class LoggerHandler
      * @param string $message Текст повідомлення.
      */
 
-    public static function warning(string $message): void
+    private static function warning(string $message): void
     {
         self::log($message, 'WARNING');
     }
@@ -63,7 +63,7 @@ class LoggerHandler
      * @param string $message Текст повідомлення.
      */
 
-    public static function info(string $message): void
+    private static function info(string $message): void
     {
         self::log($message, 'INFO');
     }
@@ -73,7 +73,7 @@ class LoggerHandler
      * @param string $message Текст повідомлення.
      */
 
-    public static function debug(string $message): void
+    private static function debug(string $message): void
     {
         self::log($message, 'DEBUG');
     }
@@ -82,8 +82,8 @@ class LoggerHandler
      * Записывает сообщение уровня ERROR.
      * @param string $message Текст сообщения.
      */
-    
-    public static function error(string $message): void
+
+    private static function error(string $message): void
     {
         self::log($message, 'ERROR');
     }

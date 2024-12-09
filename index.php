@@ -1,7 +1,7 @@
 <?php
 
 # Додавання заголовка політики безпеки контенту (CSP) для запобігання атакам XSS (корисно у HTML-виводі)
-header("Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self';");
+header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self';");
 
 # Встановлення кодування UTF-8
 header('Content-Type: text/html; charset=UTF-8');
@@ -36,8 +36,33 @@ require_once(ROOT . '/nucleus/Autoloader.php');
 # Виклик функції автозавантаження (якщо потрібно)
 Autoloader::register();
 
-# Підключення простору імен для логування
+# Підключення необхідних бібліотек.
+use Nucleus\Libraries\ModuleLoader;
 use Nucleus\Libraries\LoggerHandler;
+use Nucleus\Libraries\ErrorHandler;
+use Nucleus\Helpers\Sanitizer;
+use Nucleus\Helpers\Direct;
 
-# Ініціалізація логгера
+# Ініціалізація логування.
 LoggerHandler::init();
+ErrorHandler::init();
+
+# Обробка запиту із логуванням помилок.
+try {
+    # Основні параметри запиту.
+    $base = Sanitizer::filter(Direct::get('base'));
+    $path = Sanitizer::filter(Direct::get('path'));
+    $subpath = Sanitizer::filter(Direct::get('subpath'));
+    $section = Sanitizer::filter(Direct::get('section'));
+
+    # Перевірте наявність параметрів в URI.
+    if (ModuleLoader::hasInvalidParams(['base', 'path', 'subpath', 'section'])) {
+        LoggerHandler::log('Invalid parameters detected in the request.', 'WARNING');
+        Nucleus\Helpers\Redirect::to('/');
+    }
+    # Логіка обробки запиту.
+    ModuleLoader::processRequest($base, $path, $subpath, $section);
+} catch (\Throwable $exception) {
+    LoggerHandler::log('An error occurred while processing the request: ' . $exception->getMessage(), 'CRITICAL');
+}
+
