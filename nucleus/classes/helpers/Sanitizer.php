@@ -138,4 +138,15 @@ class Sanitizer
         return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
     }
 
+    /**
+     * Фільтрує рядок для безпечного виведення.
+     *
+     * @param string $data Вхідний рядок.
+     * @return string Очищений рядок.
+     */
+
+    public static function filter(string $data): string
+    {
+        return htmlspecialchars(self::removeScript($data), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    }
 }
