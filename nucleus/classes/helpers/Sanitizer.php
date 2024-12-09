@@ -117,4 +117,25 @@ class Sanitizer
 
         return $string;
     }
+
+    /**
+     * Повне видалення символів з тексту без заміни.
+     *
+     * @param string $text Текст, з якого потрібно видалити спеціальні символи.
+     * @return string Повертає текст без спеціальних символів.
+     */
+
+    public static function clearSpecialChars(?string $text): string
+    {
+        if (is_null($text) || !is_string($text)) {
+            return '';
+        }
+        $specialChars = ['?', '[', ']', '/', '\\', '=', '<', '>', ':', ';', ',', "'", '"', '&', '$', '#', '*', '(', ')', '|', '~', '`', '!', '{', '}', '%', '+', chr(0)];
+        $text = preg_replace('/\x{00a0}/u', ' ', $text);
+        $text = str_replace($specialChars, '', $text);
+        $text = str_replace(['%20', '+'], '', $text);
+        $text = trim($text, '.-_');
+        return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+    }
+
 }
