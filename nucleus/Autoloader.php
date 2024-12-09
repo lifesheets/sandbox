@@ -49,7 +49,7 @@ class Autoloader
                 # Видаляємо префікс namespace та створюємо відносний шлях до файлу
                 $relativeClass = substr($className, strlen($namespacePrefix));
                 # Видаляємо зайві слеші
-                $relativeClass = ltrim($relativeClass, '\\'); 
+                $relativeClass = ltrim($relativeClass, '\\');
                 $filePath = ROOT . DIRECTORY_SEPARATOR . $directory . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $relativeClass) . '.php';
 
                 # Перевіряємо, чи існує файл за сформованим шляхом

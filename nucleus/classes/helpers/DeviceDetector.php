@@ -3,9 +3,10 @@
 namespace Nucleus\Helpers;
 
 use Nucleus\Constants;
+use Nucleus\Libraries\LoggerHandler;
 
 /**
- * Класс, який визначає, чи є пристрій мобільним.
+ * Клас, що визначає, чи є пристрій мобільним.
  */
 
 class DeviceDetector
@@ -13,22 +14,39 @@ class DeviceDetector
     /**
      * Перевіряє, чи є пристрій мобільним.
      *
-     * @return bool True, якщо пристрій мобільний.
+     * Цей метод аналізує User-Agent браузера та визначає, 
+     * чи належить пристрій до мобільних.
+     *
+     * @return bool True, якщо пристрій мобільний; False, якщо ні.
      */
 
     public static function isMobile(): bool
     {
         # Список ключових слів для визначення мобільних пристроїв.
         $mobileDevices = ['iphone', 'android', 'mobile', 'ipad', 'ipod', 'blackberry', 'windows phone'];
-        $agent = strtolower(Constants::get('BROWSER') ?? '');
 
-        # Перевірка, чи входить одне з ключових слів у рядок User-Agent.
-        foreach ($mobileDevices as $device) {
-            if (str_contains($agent, $device)) {
-                return true;
+        try {
+            # Отримуємо User-Agent браузера.
+            $agent = strtolower(Constants::get('BROWSER') ?? '');
+            # Логуємо отриманий User-Agent.
+            LoggerHandler::log("User-Agent для визначення пристрою: {$agent}", 'INFO');
+
+            # Перевіряємо наявність ключових слів у User-Agent.
+            foreach ($mobileDevices as $device) {
+                if (str_contains($agent, $device)) {
+                    # Логуємо, якщо пристрій визначено як мобільний.
+                    LoggerHandler::log("Мобільний пристрій визначено: {$device}", 'INFO');
+                    return true;
+                }
             }
-        }
 
-        return false;
+            # Логуємо, якщо пристрій не визначено як мобільний.
+            LoggerHandler::log("Пристрій не є мобільним.", 'INFO');
+            return false;
+        } catch (\Exception $e) {
+            # Логуємо помилку, якщо щось пішло не так.
+            LoggerHandler::log("Помилка у DeviceDetector::isMobile: {$e->getMessage()}", 'ERROR');
+            return false;
+        }
     }
 }

@@ -77,6 +77,16 @@ class LoggerHandler
     {
         self::log($message, 'DEBUG');
     }
+
+    /**
+     * Записывает сообщение уровня ERROR.
+     * @param string $message Текст сообщения.
+     */
+    
+    public static function error(string $message): void
+    {
+        self::log($message, 'ERROR');
+    }
 }
 
 class ErrorHandler
