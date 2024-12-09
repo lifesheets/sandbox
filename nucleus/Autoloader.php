@@ -11,11 +11,11 @@ class Autoloader
      * Ключі — це префікси namespace, значення — відповідні директорії.
      */
 
-    private static $namespaceMap = [
-        'Nucleus'            => 'nucleus/classes',              // Простір імен для ядра
-        'Nucleus\\Helpers'   => 'nucleus/classes/helpers',      // Простір імен для хелперів
-        'Nucleus\\Libraries' => 'nucleus/classes/libraries',    // Простір імен для бібліотек
-        'Nucleus\\Services'   => 'nucleus/classes/services',    // Простір імен для хелперів
+    private static array $namespaceMap = [
+        'Nucleus'            => 'nucleus/classes',              // Простір імен для Nucleus
+        'Nucleus\\Helpers'   => 'nucleus/classes/helpers',      // Простір імен для Helpers
+        'Nucleus\\Libraries' => 'nucleus/classes/libraries',    // Простір імен для Libraries
+        'Nucleus\\Services'   => 'nucleus/classes/services',    // Простір імен для Services
     ];
 
     /**
