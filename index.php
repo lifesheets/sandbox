@@ -24,7 +24,7 @@ if (!defined('ROOT')) {
 }
 
 # Перевірка прямого доступу, щоб уникнути проблем із обходом шляху чи доступу до заборонених зон
-if (php_sapi_name() !== 'cli' && !realpath($_SERVER['SCRIPT_FILENAME']) && !strpos(realpath($_SERVER['SCRIPT_FILENAME']), ROOT)) {
+if (php_sapi_name() !== 'cli' && !empty($_SERVER['SCRIPT_FILENAME']) && strpos(realpath($_SERVER['SCRIPT_FILENAME']), ROOT) !== 0) {
     # Заборонити прямий доступ, якщо скрипт знаходиться поза кореневою директорією
     http_response_code(403);
     die('Заборонено');
