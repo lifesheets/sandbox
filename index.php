@@ -23,7 +23,7 @@ if (!defined('ROOT')) {
     define('ROOT', realpath($_SERVER['DOCUMENT_ROOT']));
 }
 
-# Перевірка прямого доступу, щоб уникнути проблем із обходом шляху чи доступу до заборонених зон
+# Перевірка прямого доступу, щоб уникнути проблем з обходом шляху чи доступу до заборонених зон
 if (php_sapi_name() !== 'cli' && !empty($_SERVER['SCRIPT_FILENAME']) && strpos(realpath($_SERVER['SCRIPT_FILENAME']), ROOT) !== 0) {
     # Заборонити прямий доступ, якщо скрипт знаходиться поза кореневою директорією
     http_response_code(403);
@@ -37,7 +37,7 @@ require_once(ROOT . '/nucleus/Autoloader.php');
 Autoloader::register();
 
 # Підключення простору імен для логування
-use \Nucleus\Libraries\LoggerHandler;
+use Nucleus\Libraries\LoggerHandler;
 
 # Ініціалізація логгера
 LoggerHandler::init();
