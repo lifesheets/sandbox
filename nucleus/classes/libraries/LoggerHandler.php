@@ -2,37 +2,46 @@
 
 namespace Nucleus\Libraries;
 
+use Nucleus\Constants;
+
+/**
+ * Клас для обробки логування.
+ * Використовується для запису логів різних рівнів у файл.
+ */
+
 class LoggerHandler
 {
     private static ?string $logFile = null;
 
     /**
-     * Ініціалізує логгер з файлом для запису (опціонально).
+     * Ініціалізує логгер з опційним файлом для запису.
      * @param string|null $logFile Шлях до файлу логів.
      */
 
     public static function init(string $logFile = null): void
     {
-        self::$logFile = $logFile ?? ROOT . '/nucleus/data/logs/application.log';
+        # Встановлює шлях до файлу логів, якщо він не переданий, використовується значення за замовчуванням.
+        self::$logFile = $logFile ?? ROOT . '/nucleus/data/logs/' . date('Y-m-d', Constants::get('TM')) . '.log';
     }
 
     /**
      * Записує повідомлення у лог.
      * @param string $message Текст повідомлення.
-     * @param string $level Рівень повідомлення (ERROR, WARNING, INFO, DEBUG, CRITICAL).
+     * @param string $level Рівень повідомлення (DEBUG, INFO, WARNING, ERROR, CRITICAL).
      */
-
     public static function log(string $message, string $level = 'INFO'): void
     {
-        $timestamp = date('Y-m-d H:i:s');
+        $timestamp = date('Y-m-d H:i:s', Constants::get('TM'));
         $formattedMessage = "[$timestamp] [$level] $message";
 
+        # Записує повідомлення у файл логів, якщо він визначений, або використовує error_log().
         if (self::$logFile) {
             file_put_contents(self::$logFile, $formattedMessage . PHP_EOL, FILE_APPEND);
         } else {
             error_log($formattedMessage);
         }
 
+        # Завершує виконання скрипта при критичній помилці.
         if (strtoupper($level) === 'CRITICAL') {
             die($message);
         }
@@ -40,7 +49,7 @@ class LoggerHandler
 
     /**
      * Записує критичну помилку та блокує виконання.
-     * @param string $message Текст повідомлення.
+     * @param string $message Текст критичної помилки.
      */
 
     private static function critical(string $message): void
@@ -79,8 +88,8 @@ class LoggerHandler
     }
 
     /**
-     * Записывает сообщение уровня ERROR.
-     * @param string $message Текст сообщения.
+     * Записує повідомлення рівня ERROR.
+     * @param string $message Текст повідомлення.
      */
 
     private static function error(string $message): void
@@ -88,6 +97,11 @@ class LoggerHandler
         self::log($message, 'ERROR');
     }
 }
+
+/**
+ * Клас для обробки помилок і виключень.
+ * Використовується для реєстрації обробників помилок та виключень.
+ */
 
 class ErrorHandler
 {
@@ -97,10 +111,12 @@ class ErrorHandler
 
     public static function init(): void
     {
+        # Реєстрація обробників помилок та виключень.
         set_error_handler([self::class, 'handleError']);
         set_exception_handler([self::class, 'handleException']);
         register_shutdown_function([self::class, 'handleShutdown']);
 
+        # Ініціалізація логера.
         LoggerHandler::init();
     }
 
@@ -134,8 +150,8 @@ class ErrorHandler
         $errorMessage = "Exception: " . $exception->getMessage() . "\nStack trace:\n" . $exception->getTraceAsString();
         LoggerHandler::log($errorMessage, 'CRITICAL');
 
-        // Вивід користувачу загального повідомлення при помилці
-        echo "An error occurred. Please try again later.";
+        # Вивід користувачу загального повідомлення при помилці.
+        echo "Виникла помилка. Будь ласка, спробуйте знову пізніше.";
     }
 
     /**
