@@ -2,6 +2,14 @@
 
 namespace Nucleus\Helpers;
 
+# Підключення необхідних бібліотек.
+use Nucleus\Libraries\LoggerHandler;
+use Nucleus\Helpers\Sanitizer;
+
+# Ініціалізація логування.
+LoggerHandler::init();
+
+
 # Клас для управління викликами файлів та директорій
 
 class Direct
@@ -16,13 +24,18 @@ class Direct
 
     public static function get($name)
     {
-        // Фільтруємо вхідні дані з GET-параметра
+        # Проверяем, существует ли параметр в GET-запросе
+        if (!isset($_GET[$name])) {
+            LoggerHandler::log("GET parameter '{$name}' not found", 'WARNING');
+            return 'no_data';
+        }
+        # Фильтруем входные данные
         $filter = filter_input(INPUT_GET, $name, FILTER_SANITIZE_ENCODED);
-        // Видаляємо зайві спецсимволи, повернуті функцією FILTER_SANITIZE_ENCODED
-        $get = \Nucleus\Helpers\Sanitizer::clearSpecialChars($filter);
-        // Перевіряємо, чи довжина отриманого значення більша за нуль.
+        # Убираем лишние спецсимволы
+        $get = Sanitizer::clearSpecialChars($filter);
+        # Логика проверки длины значения
         $data = (strlen($get) > 0) ? $get : 'no_data';
-        // Повертаємо значення змінної $data
+
         return $data;
     }
 
@@ -59,7 +72,6 @@ class Direct
 
     public static function components($path, $count = 1, $limit = 999999, $ext = 'php')
     {
-        global $account, $settings, $comm, $par, $list;
         // Перевірка існування директорії
         if (!is_dir($path)) {
             echo "Директорія не знайдена";
