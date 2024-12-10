@@ -1,8 +1,8 @@
 <?php
 
-namespace Nucleus\Libraries;
+namespace LiveCMS\Libraries;
 
-use Nucleus\Constants;
+use LiveCMS\Constants;
 
 /**
  * Клас для обробки логування.

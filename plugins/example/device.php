@@ -1,7 +1,7 @@
 <?php
 
 # Підключаємо клас DeviceDetector для визначення типу пристрою.
-use Nucleus\Helpers\DeviceDetector;
+use LiveCMS\Helpers\DeviceDetector;
 
 # Перевіряємо, чи є пристрій мобільним.
 if (DeviceDetector::isMobile()) {

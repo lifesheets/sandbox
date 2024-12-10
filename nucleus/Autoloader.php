@@ -1,86 +1,53 @@
 <?php
 
 /**
+ * @package LiveCMS
+ * @version 1.0.0
+ * @author  ua.livefox
+ * @license MIT
+ * @link    www.livecms.online
+ * 
  * Клас для автозавантаження файлів за допомогою namespace.
+ *
+ * Цей скрипт реалізує автозавантаження за стандартом PSR-4, 
+ * дозволяючи завантажувати всі частини LiveCMS 1.0.0 Alpha без використання Composer.
+ * 
+ * Хоча цей файл не є повноцінним класом, він зберігає назву для 
+ * забезпечення зворотної сумісності з попередніми версіями LiveCMS.
+ * 
+ * Приклад використання:
+ * require_once(ROOT . '/nucleus/Autoloader.php');
+ * $view = new LiveCMS\View;  
+ * $view->testInstall();
+ * 
  */
 
-class Autoloader
-{
-    /**
-     * Відповідність namespace та директорій.
-     * Ключі — це префікси namespace, значення — відповідні директорії.
-     */
+# Визначення шляху до директорії з класами
+define('LCMS_CLASSES_DIR', __DIR__ . '/../nucleus/classes/');
 
-    private static array $namespaceMap = [
-        'Nucleus'            => 'nucleus/classes',              // Простір імен для Nucleus
-        'Nucleus\\Helpers'   => 'nucleus/classes/helpers',      // Простір імен для Helpers
-        'Nucleus\\Libraries' => 'nucleus/classes/libraries',    // Простір імен для Libraries
-        'Nucleus\\Services'   => 'nucleus/classes/services',    // Простір імен для Services
-    ];
+# Оголошення глобальних функцій
+require_once(LCMS_CLASSES_DIR . "/functions.php");
 
-    /**
-     * Реєструє автозавантажувач.
-     */
+spl_autoload_register(function ($class) {
 
-    public static function register()
-    {
-        // Встановлюємо глобальний обробник винятків
-        set_exception_handler(function ($exception) {
-            // Виводимо повідомлення про помилку, якщо стався виняток
-            echo "Помилка: " . $exception->getMessage();
-        });
+    # Префікс класу
+    $prefix = 'LiveCMS\\';
 
-        // Реєструємо метод автозавантаження класів
-        spl_autoload_register([__CLASS__, 'autoload']);
+    # Чи використовує клас простір імен з префіксом?
+    $len = strlen($prefix);
+    if (strncmp($prefix, $class, $len) !== 0) {
+        # Якщо ні, перейти до наступного зареєстрованого автозавантажувача
+        return;
     }
 
-    /**
-     * Метод для автозавантаження класу.
-     * @param string $className Назва класу з урахуванням namespace.
-     * @throws \Exception Якщо файл класу не знайдено.
-     */
+    # Відрізати частину префікса
+    $relative_class = substr($class, $len);
 
-    private static function autoload($className)
-    {
-        # Проходимо по мапі namespace, щоб знайти відповідний шлях
-        foreach (self::$namespaceMap as $namespacePrefix => $directory) {
-            # Перевіряємо, чи починається ім'я класу з префікса namespace
-            if (str_starts_with($className, $namespacePrefix)) {
-                # Видаляємо префікс namespace та створюємо відносний шлях до файлу
-                $relativeClass = substr($className, strlen($namespacePrefix));
-                # Видаляємо зайві слеші
-                $relativeClass = ltrim($relativeClass, '\\');
-                $filePath = ROOT . DIRECTORY_SEPARATOR . $directory . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $relativeClass) . '.php';
+    # Побудувати шлях до файлу для включення
+    $file = LCMS_CLASSES_DIR . str_replace('\\', '/', $relative_class) . '.php';
 
-                # Перевіряємо, чи існує файл за сформованим шляхом
-                if (file_exists($filePath)) {
-                    # Підключаємо файл, якщо він існує
-                    require_once($filePath);
-                    return true;
-                }
-            }
-        }
-
-        # Логування та виняток, якщо файл класу не знайдено
-        if (class_exists('Nucleus\Libraries\LoggerHandler')) {
-            # Якщо існує LoggerHandler, використовуємо його для логування
-            \Nucleus\Libraries\LoggerHandler::log('
-                <h2>LiveCMS - Critical Error</h2>
-                <p>
-                    <strong>Class:</strong>
-                    <code>' . $className . '</code> not found.
-                </p>
-                <p>
-                    <strong>Expected path:</strong>
-                    <code> ' . $filePath . '</code>
-                </p>
-            ', 'CRITICAL');
-        } else {
-            # Якщо LoggerHandler недоступний, використовуємо стандартний log
-            error_log("Клас $className не знайдено.");
-        }
-
-        # Кидаємо виняток, якщо клас не знайдено
-        throw new \Exception("Клас $className не знайдено.");
+    # Якщо файл існує, підключити його
+    if (file_exists($file)) {
+        require_once($file);
     }
-}
+});

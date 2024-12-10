@@ -33,15 +33,12 @@ if (php_sapi_name() !== 'cli' && !empty($_SERVER['SCRIPT_FILENAME']) && strpos(r
 # Підключення автозавантажувача класів
 require_once(ROOT . '/nucleus/Autoloader.php');
 
-# Виклик функції автозавантаження (якщо потрібно)
-Autoloader::register();
-
 # Підключення необхідних бібліотек.
-use Nucleus\Libraries\ModuleLoader;
-use Nucleus\Libraries\LoggerHandler;
-use Nucleus\Libraries\ErrorHandler;
-use Nucleus\Helpers\Sanitizer;
-use Nucleus\Helpers\Direct;
+use LiveCMS\Libraries\ModuleLoader;
+use LiveCMS\Libraries\LoggerHandler;
+use LiveCMS\Libraries\ErrorHandler;
+use LiveCMS\Helpers\Sanitizer;
+use LiveCMS\Helpers\Direct;
 
 # Ініціалізація логування.
 LoggerHandler::init();
@@ -58,7 +55,7 @@ try {
     # Перевірте наявність параметрів в URI.
     if (ModuleLoader::hasInvalidParams(['base', 'path', 'subpath', 'section'])) {
         LoggerHandler::log('Invalid parameters detected in the request.', 'WARNING');
-        Nucleus\Helpers\Redirect::to('/');
+        LiveCMS\Helpers\Redirect::to('/');
     }
     # Логіка обробки запиту.
     ModuleLoader::processRequest($base, $path, $subpath, $section);

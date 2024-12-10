@@ -1,9 +1,9 @@
 <?php
 
-namespace Nucleus\Helpers;
+namespace LiveCMS\Helpers;
 
-use Nucleus\Constants;
-use Nucleus\Libraries\LoggerHandler;
+use LiveCMS\Constants;
+use LiveCMS\Libraries\LoggerHandler;
 
 /**
  * Клас, що визначає, чи є пристрій мобільним.

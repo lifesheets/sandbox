@@ -1,10 +1,10 @@
 <?php
 
-namespace Nucleus\Helpers;
+namespace LiveCMS\Helpers;
 
 # Підключення необхідних бібліотек.
-use Nucleus\Libraries\LoggerHandler;
-use Nucleus\Helpers\Sanitizer;
+use LiveCMS\Libraries\LoggerHandler;
+use LiveCMS\Helpers\Sanitizer;
 
 # Ініціалізація логування.
 LoggerHandler::init();

@@ -1,7 +1,7 @@
 <?php
 
 # Підключення необхідних бібліотек.
-use Nucleus\Helpers\Direct;
+use LiveCMS\Helpers\Direct;
 
 ?>
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Nucleus\Helpers;
+namespace LiveCMS\Helpers;
 
 class Sanitizer
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Nucleus\Libraries;
+namespace LiveCMS\Libraries;
 
-use Nucleus\Helpers\Direct;
-use Nucleus\Libraries\LoggerHandler;
+use LiveCMS\Helpers\Direct;
+use LiveCMS\Libraries\LoggerHandler;
 
 /**
  * Клас для завантаження модулів.

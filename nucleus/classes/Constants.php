@@ -1,9 +1,9 @@
 <?php
 
-namespace Nucleus;
+namespace LiveCMS;
 
 # Імпортуємо клас Sanitizer для використання його методів фільтрації
-use Nucleus\Helpers\Sanitizer;
+use LiveCMS\Helpers\Sanitizer;
 
 /**
  * Клас Constants забезпечує доступ до глобальних констант та змінних.

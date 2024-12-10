@@ -1,6 +1,6 @@
 <?php
 
-use Nucleus\Helpers\Redirect;
+use LiveCMS\Helpers\Redirect;
 
 // Якщо була натиснута кнопка, виконуємо перенаправлення.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['redirect_button'])) {
