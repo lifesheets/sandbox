@@ -7,7 +7,7 @@ header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-i
 header('Content-Type: text/html; charset=UTF-8');
 
 # Ідентифікатор CMS у заголовку
-header('Powered: LiveCMS');
+header('X-Powered-By: LiveCMS');
 
 # Публічне кешування
 header('Cache-control: public');
